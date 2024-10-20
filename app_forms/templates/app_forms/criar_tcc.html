@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar TCC</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Link para o CSS -->
+</head>
+<body>
+    <div id="container">
+        <div class="contact-wrapper">
+            <div class="envelope">
+                <div class="back paper"></div>
+                <div class="content">
+                    <div class="form-wrapper">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="top-wrapper">
+                                <div class="input">
+                                    <label>Título</label>
+                                    {{ form.titulo }}
+                                </div>
+                                <div class="input">
+                                    <label>Descrição</label>
+                                    {{ form.descricao }}
+                                </div>
+                                <div class="input">
+                                    <label>Capa do TCC</label>
+                                    {{ form.capa }}
+                                </div>
+                            </div>
+                            <div class="bottom-wrapper">
+                                <div class="input">
+                                    <label>Autores</label>
+                                    {{ form.autores }}
+                                </div>
+                                <div class="input">
+                                    <label>Curso</label>
+                                    {{ form.curso }}
+                                </div>
+                                <div class="input">
+                                    <label>Data de Início</label>
+                                    {{ form.data_inicio }}
+                                </div>
+                                <div class="input">
+                                    <label>Data de Entrega</label>
+                                    {{ form.data_entrega }}
+                                </div>
+                                <div class="submit">
+                                    <button type="submit" class="submit-card">Criar TCC</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="front paper"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
