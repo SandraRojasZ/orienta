@@ -1,56 +1,160 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar TCC</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Link para o CSS -->
+    <title>Orientador</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <script>
+        function filterTCCs() {
+            // Captura o valor do input
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            // Itera sobre todos os cards
+            cards.forEach(card => {
+                // Captura o texto do status do card
+                const status = card.querySelector('.status-text').innerText.toLowerCase();
+                // Verifica se o status contém o valor do input
+                if (status.includes(input)) {
+                    card.style.display = ''; // Exibe o card
+                } else {
+                    card.style.display = 'none'; // Oculta o card
+                }
+            });
+        }
+    </script>
 </head>
-<body>
-    <div id="container">
+
+
+<body class="index-page" style="background-color: #f9f9f9;">
+
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1 class="sitename">Orienta</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="index.html" class="active">Home<br></a></li>
+                    <li><a href="courses.html">Cursos</a></li>
+                    <li><a href="trainers.html">Treinamentos</a></li>
+                    <li><a href="contact.html">Contato</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+            <a class="btn-getstarted" href="{% url 'home' %}">Sair</a>
+
+        </div>
+    </header>
+    <div class="container" style="background-color: #f9f9f9;">
+        <h3>Bem-vindo, {{ request.user.username }}!</h3>
+        <p>Preencha os dados os alunos que você está orientado</p>
         <div class="contact-wrapper">
             <div class="envelope">
                 <div class="back paper"></div>
                 <div class="content">
                     <div class="form-wrapper">
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="post" enctype="multipart/form-data" action="{% url 'criar_tcc' %}">
                             {% csrf_token %}
                             <div class="top-wrapper">
                                 <div class="input">
-                                    <label>Título</label>
+                                    <label>Título do TCC</label>
+                                    <br>
                                     {{ form.titulo }}
                                 </div>
+                                <br>
                                 <div class="input">
-                                    <label>Descrição</label>
-                                    {{ form.descricao }}
-                                </div>
-                                <div class="input">
-                                    <label>Capa do TCC</label>
+                                    <label>Capa</label>
+                                    <br>                                 
                                     {{ form.capa }}
                                 </div>
+                                <br>
+                                <div class="input">
+                                    <label>Descrição do TCC</label>
+                                    <br>
+                                    {{ form.descricao }}
+                                </div>
+                                
                             </div>
+                            <br>
                             <div class="bottom-wrapper">
                                 <div class="input">
-                                    <label>Autores</label>
-                                    {{ form.autores }}
-                                </div>
+                                    <p>Autores</p>                                    
+                                    {{ form.autor1 }}
+                                    {{ form.autor2 }}
+                                    {{ form.autor3 }}
+                                </div>                               
+                                <br>
                                 <div class="input">
                                     <label>Curso</label>
+                                    <br>
                                     {{ form.curso }}
                                 </div>
+                                <br>
                                 <div class="input">
                                     <label>Data de Início</label>
+                                    <br>
                                     {{ form.data_inicio }}
                                 </div>
                                 <div class="input">
                                     <label>Data de Entrega</label>
+                                    <br>
                                     {{ form.data_entrega }}
                                 </div>
-                                <div class="submit">
-                                    <button type="submit" class="submit-card">Criar TCC</button>
+                                <br>
+                                <div class="input">
+                                    <label>Status</label>                                    
+                                    {{ form.status }}
                                 </div>
                             </div>
+                            <br>
+                            <button type="submit">Criar TCC</button>
+                            <a href="{% url 'dashboard' %}" class="btn btn-primary"
+                style="background-color: #3e2e6e; border: 1px solid #3e2e6e; text-decoration: none;">Cancelar</a>
+                            {% if form.errors %}
+                            <div class="errors">
+                                <ul>
+                                    {% for field in form %}
+                                    {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
                         </form>
                     </div>
                 </div>
@@ -58,5 +162,7 @@
             </div>
         </div>
     </div>
+    
 </body>
+
 </html>
